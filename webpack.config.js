@@ -3,15 +3,19 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = {
   mode: "development",
-  entry: "./src/index.js",
+  entry: "./src/index.ts",
   output: {
     path: __dirname + "/dist",
     filename: "bundle.js",
     clean: true,
     publicPath: "/",
   },
+  devtool: "inline-source-map",
   devServer: {
     static: "./dist",
+  },
+  resolve: {
+    extensions: [".tsx", ".ts", ".js"],
   },
   plugins: [
     new HtmlWebpackPlugin({
@@ -55,6 +59,11 @@ module.exports = {
             limit: 5000, // 5kb 미만 파일만 data url로 처리
           },
         },
+      },
+      {
+        test: /\.tsx?$/,
+        use: "ts-loader",
+        exclude: /node_modules/,
       },
     ],
   },

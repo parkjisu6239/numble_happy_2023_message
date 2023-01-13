@@ -14,3 +14,4 @@
 
 - [prettier](https://lakelouise.tistory.com/200)
 - [린트랑 프리티어 하고 나니까 생긴 에러](https://github.com/AtomLinter/linter-eslint/issues/462)
+- [ts](https://webpack.js.org/guides/typescript/#basic-setup)
