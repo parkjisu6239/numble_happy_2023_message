@@ -1,11 +1,12 @@
 import "./index.css";
+import New from "./pages/New";
 
 function component() {
   console.log("hi");
 
   const element = document.createElement("div");
 
-  element.innerHTML = "Hello webpack";
+  element.innerHTML = New();
 
   return element;
 }

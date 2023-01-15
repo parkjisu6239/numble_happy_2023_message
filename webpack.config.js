@@ -1,5 +1,9 @@
 const path = require("path");
+const webpack = require("webpack");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const dotenv = require("dotenv").config({
+  path: path.join(__dirname, ".env"),
+});
 
 module.exports = {
   mode: "development",
@@ -23,6 +27,9 @@ module.exports = {
         title: "Webpack 러닝 가이드", // 문서 타이틀
         lang: "ko-KR", // 주 언어 명시
       },
+    }),
+    new webpack.DefinePlugin({
+      "process.env": JSON.stringify(dotenv.parsed),
     }),
   ],
   module: {
