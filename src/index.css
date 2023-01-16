@@ -1,3 +1,8 @@
+#root {
+  max-width: 640px;
+  margin: 0 auto;
+}
+
 .hide {
   display: none;
 }
