@@ -1,9 +1,22 @@
-import { getRandomImage } from "../utils/apis";
+import { getRandomImage, createPost, type PostParams } from "utils/apis";
 
 import "../styles/new.css";
 
-const New = () => {
-  const addIamge = async () => {
+interface Props {
+  target: HTMLDivElement;
+}
+
+class NewPage {
+  component: HTMLDivElement;
+
+  constructor({ target }: Props) {
+    this.component = document.createElement("div");
+    target.insertAdjacentElement("beforeend", this.component);
+    this.addEventListener();
+    this.render();
+  }
+
+  addIamge = async () => {
     const res = await getRandomImage();
     const url = res.urls.thumb;
 
@@ -26,39 +39,61 @@ const New = () => {
     refreshImageBtn.disabled = false;
   };
 
-  // DOM 업데이트 후 이벤트 추가
-  window.onload = () => {
-    const newImageBox = document.querySelector(".new-image");
-    newImageBox.addEventListener("click", addIamge);
+  addPost = async (event: SubmitEvent) => {
+    event.preventDefault();
+    const data = new FormData(event.target as HTMLFormElement);
+    const params = {
+      title: data.get("title"),
+      content: data.get("content"),
+      image: data.get("image"),
+    } as PostParams;
 
-    const refreshImageBtn: HTMLButtonElement =
-      document.querySelector(".refresh-image");
-    refreshImageBtn.addEventListener("click", addIamge);
+    const res = await createPost(params);
+    if (res.code >= 400) {
+      window.alert(`일시적인 오류가 발생했습니다.(${res.code})`);
+    }
   };
 
-  /*html*/
-  return `
-    <form action="http://43.201.103.199/post" method="POST">
-      <fieldset>
-        <legend>신년 메시지 등록하기</legend>
-        <div>
-          <img class="add-image unsplash hide" alt="new"/>
-          <div class="add-image new-image"></div>
-          <input class="image-input" type="hidden" name="image">
-          <button type="button" class="refresh-image" disabled>🔄</button>
-        </div>
-        <div>
-          <label for="title">제목</label>
-          <input type="text" name="title" placeholder="글 제목을 입력해주세요">
-        </div>
-        <div>
-          <label for="content">내용</label>
-          <textarea type="text" name="content" placeholder="글 내용을 입력해주세요"></textarea>
-        </div>
-        <button type="submit">등록하기</button>
-    </fieldset>
-    </form>
-  `;
-};
+  addEventListener = () => {
+    // DOM 업데이트 후 이벤트 추가
+    window.onload = () => {
+      const newImageBox = document.querySelector(".new-image");
+      newImageBox.addEventListener("click", this.addIamge);
 
-export default New;
+      const refreshImageBtn: HTMLButtonElement =
+        document.querySelector(".refresh-image");
+      refreshImageBtn.addEventListener("click", this.addIamge);
+
+      const form = document.querySelector(".new-post");
+      form.addEventListener("submit", this.addPost);
+    };
+  };
+
+  render() {
+    /*html*/
+    this.component.innerHTML = `
+      <form class="new-post">
+        <fieldset>
+          <legend>신년 메시지 등록하기</legend>
+          <div>
+            <img class="add-image unsplash hide" alt="new"/>
+            <div class="add-image new-image"></div>
+            <input class="image-input" type="hidden" name="image">
+            <button type="button" class="refresh-image" disabled>🔄</button>
+          </div>
+          <div>
+            <label for="title">제목</label>
+            <input type="text" name="title" placeholder="글 제목을 입력해주세요">
+          </div>
+          <div>
+            <label for="content">내용</label>
+            <textarea type="text" name="content" placeholder="글 내용을 입력해주세요"></textarea>
+          </div>
+          <button type="submit">등록하기</button>
+      </fieldset>
+      </form>
+    `;
+  }
+}
+
+export default NewPage;

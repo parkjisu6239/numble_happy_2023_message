@@ -20,13 +20,20 @@ module.exports = {
   },
   resolve: {
     extensions: [".tsx", ".ts", ".js"],
+    alias: {
+      components: path.resolve(__dirname, "src/components"),
+      pages: path.resolve(__dirname, "src/pages"),
+      utils: path.resolve(__dirname, "src/utils"),
+    },
   },
   plugins: [
     new HtmlWebpackPlugin({
-      templateParameters: {
-        title: "Webpack 러닝 가이드", // 문서 타이틀
-        lang: "ko-KR", // 주 언어 명시
+      title: "넘블러 신년메세지 주고받기",
+      lang: "ko-KR",
+      meta: {
+        description: "넘블러 신년메세지 주고받기 챌린지입니다.",
       },
+      template: "./src/index.html",
     }),
     new webpack.DefinePlugin({
       "process.env": JSON.stringify(dotenv.parsed),

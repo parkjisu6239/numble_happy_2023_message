@@ -1,14 +1,6 @@
 import "./index.css";
-import New from "./pages/New";
+import App from "./App";
 
-function component() {
-  console.log("hi");
+const target: HTMLDivElement = document.querySelector("#root");
 
-  const element = document.createElement("div");
-
-  element.innerHTML = New();
-
-  return element;
-}
-
-document.body.appendChild(component());
+new App({ target });
