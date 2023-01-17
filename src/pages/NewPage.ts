@@ -1,4 +1,5 @@
 import { getRandomImage, createPost, type PostParams } from "utils/apis";
+import { navigate } from "../router";
 
 import "../styles/new.css";
 
@@ -11,8 +12,8 @@ class NewPage {
 
   constructor({ target }: Props) {
     this.target = target;
-    this.addEventListener();
     this.render();
+    this.addEventListener();
   }
 
   addIamge = async () => {
@@ -48,24 +49,20 @@ class NewPage {
     } as PostParams;
 
     const res = await createPost(params);
-    if (res.code >= 400) {
-      window.alert(`일시적인 오류가 발생했습니다.(${res.code})`);
-    }
+    navigate({ to: `/post/${res.data.postId}` });
   };
 
   addEventListener = () => {
     // DOM 업데이트 후 이벤트 추가
-    window.onload = () => {
-      const newImageBox = document.querySelector(".new-image");
-      newImageBox.addEventListener("click", this.addIamge);
+    const newImageBox = document.querySelector(".new-image");
+    newImageBox.addEventListener("click", this.addIamge);
 
-      const refreshImageBtn: HTMLButtonElement =
-        document.querySelector(".refresh-image");
-      refreshImageBtn.addEventListener("click", this.addIamge);
+    const refreshImageBtn: HTMLButtonElement =
+      document.querySelector(".refresh-image");
+    refreshImageBtn.addEventListener("click", this.addIamge);
 
-      const form = document.querySelector(".new-post");
-      form.addEventListener("submit", this.addPost);
-    };
+    const form = document.querySelector(".new-post");
+    form.addEventListener("submit", this.addPost);
   };
 
   render() {

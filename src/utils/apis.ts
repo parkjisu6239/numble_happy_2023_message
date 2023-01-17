@@ -9,14 +9,11 @@ const request = async <T>(
 ): Promise<T | undefined> => {
   try {
     const response = await fetch(url, option);
-
+    const res = await response.json();
     if (!response.ok) {
-      throw new Error(
-        `API Error(status: ${response.status}, ${response.statusText})`
-      );
+      alert(`${res.message} (${res.code})`);
     }
-
-    return await response.json();
+    return res;
   } catch (e) {
     console.error(e);
   }
@@ -59,7 +56,7 @@ export const getAllPost = async () => {
 export const getPostDetail = async (postId: string) => {
   return await request<{
     code: number;
-    data: { post: PostWithComment };
+    data: PostWithComment;
   }>(NUMBLE_BASE_URL + "/post" + `/${postId}`);
 };
 
@@ -76,7 +73,7 @@ export type PostParams = {
 export const createPost = async (params: PostParams) => {
   return await request<{
     code: number;
-    data: { post: Post };
+    data: Post;
   }>(NUMBLE_BASE_URL + "/post", {
     method: "POST",
     body: JSON.stringify(params),
@@ -102,6 +99,9 @@ export const updatePost = async (
   }>(NUMBLE_BASE_URL + "/post" + `/${postId}`, {
     method: "PATCH",
     body: JSON.stringify(params),
+    headers: {
+      "Content-Type": "application/json",
+    },
   });
 };
 
@@ -121,16 +121,20 @@ export const deletePost = async (postId: string) => {
 /**
  * 댓글을 추가합니다.
  * @param postId
- * @param comment
+ * @param content
  * @returns
  */
-export const createComment = async (postId: string, comment: string) => {
+export const createComment = async (postId: string, content: string) => {
   return await request<{
     code: number;
+    message?: string;
     data: { post: Comment };
   }>(NUMBLE_BASE_URL + "/comment" + `/${postId}`, {
     method: "POST",
-    body: JSON.stringify({ comment }),
+    body: JSON.stringify({ content }),
+    headers: {
+      "Content-Type": "application/json",
+    },
   });
 };
 

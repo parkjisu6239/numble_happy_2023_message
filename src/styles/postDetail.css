@@ -1,0 +1,11 @@
+.post-detail > img {
+  width: 200px;
+  height: 200px;
+}
+
+.post-detail input[name="title"]:read-only,
+.post-detail textarea[name="content"]:read-only {
+  border: none;
+  resize: none;
+  background-color: transparent;
+}

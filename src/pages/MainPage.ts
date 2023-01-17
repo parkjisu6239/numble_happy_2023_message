@@ -22,11 +22,6 @@ class MainPage {
 
   getPostList = async () => {
     const res = await getAllPost();
-    if (res.code >= 400) {
-      window.alert(`오류가 발생했습니다.(${res.code})`);
-      return;
-    }
-
     this.posts.setValue(res.data.posts);
   };
 

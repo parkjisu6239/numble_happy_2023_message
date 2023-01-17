@@ -17,6 +17,9 @@ module.exports = {
   devtool: "inline-source-map",
   devServer: {
     static: "./dist",
+    historyApiFallback: {
+      index: "index.html",
+    },
   },
   resolve: {
     extensions: [".tsx", ".ts", ".js"],

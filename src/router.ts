@@ -1,12 +1,13 @@
 import type { RouteInfo, EventWithRouteInfo } from "src/types";
 import MainPage from "pages/MainPage";
 import NewPage from "pages/NewPage";
+import PostPage from "pages/PostPage";
 import NotFoundPage from "pages/NotFoundPage";
 
 const routes = [
   { path: /^\/$/, view: MainPage },
   { path: /^\/new$/, view: NewPage },
-  // { path: /^\/post\/[\w]+$/, view: () => console.log("Viewing Posts") },
+  { path: /^\/post\/[\w]+$/, view: PostPage },
 ];
 
 export const navigate = ({ to, isReplace = false }: RouteInfo) => {

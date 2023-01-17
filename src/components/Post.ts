@@ -13,11 +13,11 @@ class Post {
   render() {
     /*html*/
     return `
-      <li class="post-item">
-        <img class="post-image" src=${this.post.image}/>
-        <p class="post-title">${this.post.title}</p>
-        <div class="post-content">${this.post.content}</div>
-      </li>
+    <a class="post-item" href="/post/${this.post.postId}">
+      <img class="post-image" src=${this.post.image}/>
+      <p class="post-title">${this.post.title}</p>
+      <p class="post-content">${this.post.content}</p>
+    </a>
     `;
   }
 }
