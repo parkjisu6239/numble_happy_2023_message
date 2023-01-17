@@ -17,3 +17,12 @@ export type PostWithComment = {
   post: Post;
   comments: Comment[];
 };
+
+export type RouteInfo = {
+  to: string;
+  isReplace?: boolean;
+};
+
+export interface EventWithRouteInfo extends Event {
+  detail: RouteInfo;
+}

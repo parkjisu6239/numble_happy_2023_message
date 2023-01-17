@@ -9,12 +9,11 @@ interface Props {
 }
 
 class MainPage {
-  component: HTMLDivElement;
+  target: HTMLDivElement;
   posts = useState<PostType[]>([] as PostType[]);
 
   constructor({ target }: Props) {
-    this.component = document.createElement("div");
-    target.insertAdjacentElement("beforeend", this.component);
+    this.target = target;
     this.addEventListener();
     this.render();
     this.posts.addWatcher(this.render.bind(this));
@@ -35,8 +34,9 @@ class MainPage {
 
   render() {
     /*html*/
-    this.component.innerHTML = `
+    this.target.innerHTML = `
     <article>
+      <a href="/new">새글쓰기</a>
       <h1>2023 신년 메시지 🐰</h1>
       <ul class="post-list">
         ${this.posts

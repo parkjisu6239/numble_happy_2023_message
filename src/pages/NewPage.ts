@@ -7,11 +7,10 @@ interface Props {
 }
 
 class NewPage {
-  component: HTMLDivElement;
+  target: HTMLDivElement;
 
   constructor({ target }: Props) {
-    this.component = document.createElement("div");
-    target.insertAdjacentElement("beforeend", this.component);
+    this.target = target;
     this.addEventListener();
     this.render();
   }
@@ -71,7 +70,9 @@ class NewPage {
 
   render() {
     /*html*/
-    this.component.innerHTML = `
+    this.target.innerHTML = `
+    <article>
+      <a href="/">메인으로</a>
       <form class="new-post">
         <fieldset>
           <legend>신년 메시지 등록하기</legend>
@@ -92,6 +93,7 @@ class NewPage {
           <button type="submit">등록하기</button>
       </fieldset>
       </form>
+    </article>
     `;
   }
 }
