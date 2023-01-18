@@ -36,9 +36,6 @@ module.exports = {
       },
       template: "./src/index.html",
     }),
-    new webpack.DefinePlugin({
-      "process.env": JSON.stringify(dotenv.parsed),
-    }),
   ],
   module: {
     rules: [
