@@ -12,40 +12,67 @@ interface Props {
   target: HTMLDivElement;
 }
 
+interface State {
+  postId: string;
+  post: Post;
+  comments: Comment[];
+  editMode: boolean;
+}
+
 class PostPage {
   target: HTMLDivElement;
-  postId: string;
-  post = useState<Post>({} as Post);
-  comments = useState<Comment[]>([] as Comment[]);
-  editMode = useState(false);
+  state = useState<State>({
+    postId: "",
+    post: {} as Post,
+    comments: [],
+    editMode: false,
+  });
 
   constructor({ target }: Props) {
     this.target = target;
-    this.postId = getParams(location.pathname);
+    this.state.setValue({
+      ...this.state.getValue(),
+      postId: getParams(location.pathname),
+    });
     this.render();
+    this.state.addWatcher(this.render.bind(this));
     this.addEventListener();
-    this.post.addWatcher(this.render.bind(this));
-    this.comments.addWatcher(this.render.bind(this));
-    this.editMode.addWatcher(this.render.bind(this));
     this.getPost();
   }
 
   getPost = async () => {
-    const res = await getPostDetail(this.postId);
+    const res = await getPostDetail(this.state.getValue().postId);
     if (res.code >= 400) {
       navigate({ to: "/" });
     }
-    this.post.setValue(res.data.post);
-    this.comments.setValue(res.data.comments);
+    this.state.setValue({
+      ...this.state.getValue(),
+      post: res.data.post,
+      comments: res.data.comments,
+    });
   };
 
   addEventListener = () => {};
 
+  setEditMode = (editMode: boolean) => {
+    this.state.setValue({
+      ...this.state.getValue(),
+      editMode,
+    });
+  };
+
+  setPost = (post: Post) => {
+    this.state.setValue({
+      ...this.state.getValue(),
+      post,
+    });
+  };
+
   render() {
+    const { postId, post, comments, editMode } = this.state.getValue();
     /*html*/
     this.target.innerHTML = `
     <article>
-      <a href="/">메인으로</a>
       <div id="post-detail"></div>
       <div id="commets"></div>
     </article>
@@ -55,17 +82,17 @@ class PostPage {
       document.querySelector("#post-detail");
     new PostDetail({
       target: postDetailConatainer,
-      post: this.post.getValue(),
-      editMode: this.editMode.getValue(),
-      setPost: this.post.setValue,
-      setEditMode: this.editMode.setValue,
+      post,
+      editMode,
+      setPost: this.setPost.bind(this),
+      setEditMode: this.setEditMode.bind(this),
     });
 
     const commentContainer: HTMLDivElement = document.querySelector("#commets");
     new CommentList({
       target: commentContainer,
-      comments: this.comments.getValue(),
-      postId: this.postId,
+      comments,
+      postId,
     });
   }
 }

@@ -3,10 +3,10 @@ interface Props {
 }
 
 class NotFoundPage {
-  target: HTMLDivElement;
+  props: Props;
 
-  constructor({ target }: Props) {
-    this.target = target;
+  constructor(props: Props) {
+    this.props = props;
     this.addEventListener();
     this.render();
   }
@@ -15,7 +15,7 @@ class NotFoundPage {
 
   render() {
     /*html*/
-    this.target.innerHTML = `
+    this.props.target.innerHTML = `
     <article>
       404 Not Found
     </article>

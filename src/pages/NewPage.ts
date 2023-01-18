@@ -1,51 +1,49 @@
 import { getRandomImage, createPost, type PostParams } from "@/utils/apis";
 import { navigate } from "@/router";
 
-import "@/styles/new.css";
+import "@/styles/newPage.css";
 
 interface Props {
   target: HTMLDivElement;
 }
 
 class NewPage {
-  target: HTMLDivElement;
+  props: Props;
 
-  constructor({ target }: Props) {
-    this.target = target;
+  constructor(props: Props) {
+    this.props = props;
     this.render();
     this.addEventListener();
   }
 
   addIamge = async () => {
     const res = await getRandomImage();
-    const url = res.urls.thumb;
+    const url = res.urls.regular;
 
-    // image 표시
-    const image: HTMLImageElement = document.querySelector(".unsplash");
-    image.src = url;
-    image.classList.add("show");
-
-    // image 추가 div 숨기기
-    const newImageBox = document.querySelector(".new-image");
-    newImageBox.classList.add("hide");
+    const newImageBox: HTMLDivElement = document.querySelector(".add-image");
+    newImageBox.style.backgroundImage = `url(${url})`;
 
     // form 요청을 위해 input value 추가
     const input: HTMLInputElement = document.querySelector(".image-input");
     input.value = url;
-
-    // 이미지 새로고침 버튼 활성화
-    const refreshImageBtn: HTMLButtonElement =
-      document.querySelector(".refresh-image");
-    refreshImageBtn.disabled = false;
   };
 
   addPost = async (event: SubmitEvent) => {
     event.preventDefault();
     const data = new FormData(event.target as HTMLFormElement);
+    const title = data.get("title");
+    const content = data.get("content");
+    const image = data.get("image");
+
+    if (!title || !content || !image) {
+      alert("모든 필드를 채워주세요");
+      return;
+    }
+
     const params = {
-      title: data.get("title"),
-      content: data.get("content"),
-      image: data.get("image"),
+      title,
+      content,
+      image,
     } as PostParams;
 
     const res = await createPost(params);
@@ -53,13 +51,8 @@ class NewPage {
   };
 
   addEventListener = () => {
-    // DOM 업데이트 후 이벤트 추가
-    const newImageBox = document.querySelector(".new-image");
+    const newImageBox = document.querySelector(".add-image");
     newImageBox.addEventListener("click", this.addIamge);
-
-    const refreshImageBtn: HTMLButtonElement =
-      document.querySelector(".refresh-image");
-    refreshImageBtn.addEventListener("click", this.addIamge);
 
     const form = document.querySelector(".new-post");
     form.addEventListener("submit", this.addPost);
@@ -67,17 +60,15 @@ class NewPage {
 
   render() {
     /*html*/
-    this.target.innerHTML = `
+    this.props.target.innerHTML = `
     <article>
-      <a href="/">메인으로</a>
+      <a href="/" class="link-button default-hover move-to-main">메인으로</a>
       <form class="new-post">
-        <fieldset>
+        <fieldset class="new-field">
           <legend>신년 메시지 등록하기</legend>
           <div>
-            <img class="add-image unsplash hide" alt="new"/>
-            <div class="add-image new-image"></div>
+            <div class="add-image"></div>
             <input class="image-input" type="hidden" name="image">
-            <button type="button" class="refresh-image" disabled>🔄</button>
           </div>
           <div>
             <label for="title">제목</label>

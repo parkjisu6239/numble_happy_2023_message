@@ -1,13 +1,15 @@
+import { isEqual, cloneDeep } from "lodash";
+
 const useState = <T>(initialValue: T) => {
   let current = initialValue;
   const watchers: Function[] = [];
 
   return {
-    getValue: () => current,
+    getValue: () => cloneDeep(current),
     setValue: (newValue: T) => {
-      const oldValue = current;
-      if (oldValue !== newValue) {
-        current = newValue;
+      const oldValue = cloneDeep(current);
+      if (!isEqual(oldValue, newValue)) {
+        current = cloneDeep(newValue);
         watchers.forEach((watcher) => {
           watcher(newValue);
         });
@@ -18,5 +20,7 @@ const useState = <T>(initialValue: T) => {
     },
   };
 };
+
+export type UseStateType<T> = ReturnType<typeof useState<T>>;
 
 export default useState;

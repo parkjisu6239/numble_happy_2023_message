@@ -31,6 +31,8 @@ export const getRandomImage = async () => {
   const response = await request<{
     urls: {
       thumb: string;
+      small: string;
+      regular: string;
     };
   }>(url, { headers });
 

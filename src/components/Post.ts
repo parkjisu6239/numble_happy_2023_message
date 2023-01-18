@@ -1,23 +1,34 @@
 import { type Post as PostType } from "@/types";
+import "@/styles/postList.css";
 
-class Post {
+interface Props {
+  target: HTMLUListElement;
   post: PostType;
+}
+class Post {
+  props: Props;
+  postItem: HTMLAnchorElement;
 
-  constructor(post: PostType) {
-    this.addEventListener();
-    this.post = post;
+  constructor(props: Props) {
+    this.props = props;
+    this.postItem = document.createElement("a");
+    this.postItem.classList.add("post-item", "default-hover");
+    this.postItem.href = `/post/${props.post.postId}`;
+    this.props.target.insertAdjacentElement("beforeend", this.postItem);
+    this.render();
   }
 
-  addEventListener = () => {};
-
   render() {
+    const { image, title, content } = this.props.post;
+    const smallImg = image.replace(/w.*\d/, "&w=200");
+
     /*html*/
-    return `
-    <a class="post-item" href="/post/${this.post.postId}">
-      <img class="post-image" src=${this.post.image}/>
-      <p class="post-title">${this.post.title}</p>
-      <p class="post-content">${this.post.content}</p>
-    </a>
+    this.postItem.innerHTML = `
+      <div>
+        <img class="post-image" src=${smallImg}/>
+        <p class="post-title">${title}</p>
+        <p class="post-content">${content}</p>
+      </div>
     `;
   }
 }

@@ -2,48 +2,52 @@ import { type Post as PostType } from "@/types";
 import useState from "@/hooks/useState";
 import { getAllPost } from "@/utils/apis";
 import Post from "@/components/Post";
-import "@/styles/postList.css";
+
+import "@/styles/mainPage.css";
 
 interface Props {
   target: HTMLDivElement;
 }
 
-class MainPage {
-  target: HTMLDivElement;
-  posts = useState<PostType[]>([] as PostType[]);
+interface State {
+  posts: PostType[];
+}
 
-  constructor({ target }: Props) {
-    this.target = target;
-    this.addEventListener();
+class MainPage {
+  props: Props;
+  state = useState({
+    posts: [],
+  });
+
+  constructor(props: Props) {
+    this.props = props;
     this.render();
-    this.posts.addWatcher(this.render.bind(this));
+    this.state.addWatcher(this.render.bind(this));
     this.getPostList();
+    this.addEventListener();
   }
 
   getPostList = async () => {
     const res = await getAllPost();
-    this.posts.setValue(res.data.posts);
+    this.state.setValue({ posts: res.data.posts });
   };
 
   addEventListener = () => {};
 
   render() {
     /*html*/
-    this.target.innerHTML = `
+    this.props.target.innerHTML = `
     <article>
-      <a href="/new">새글쓰기</a>
+      <a href="/new" class="link-button default-hover move-to-new">메시지 추가하기 🖍</a>
       <h1>2023 신년 메시지 🐰</h1>
-      <ul class="post-list">
-        ${this.posts
-          .getValue()
-          .map((post) => {
-            const PostComponent = new Post(post);
-            return PostComponent.render();
-          })
-          .join("")}
-      </ul>
+      <ul class="post-list"></ul>
     </article>
     `;
+
+    const postList: HTMLUListElement = document.querySelector(".post-list");
+    this.state.getValue().posts.forEach((post) => {
+      new Post({ post, target: postList });
+    });
   }
 }
 

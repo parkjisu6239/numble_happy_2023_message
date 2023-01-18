@@ -1,7 +1,7 @@
 import { Comment } from "@/types";
 import { createComment, deleteComment, type PostParams } from "@/utils/apis";
 
-import "@/styles/postDetail.css";
+import "@/styles/commentList.css";
 
 interface Props {
   target: HTMLDivElement;
@@ -10,10 +10,10 @@ interface Props {
 }
 
 class CommentList {
-  state: Props;
+  props: Props;
 
   constructor(props: Props) {
-    this.state = props;
+    this.props = props;
     this.render();
     this.addEventListener();
   }
@@ -23,7 +23,7 @@ class CommentList {
     const data = new FormData(event.target as HTMLFormElement);
     const content = data.get("content") as string;
 
-    const res = await createComment(this.state.postId, content);
+    const res = await createComment(this.props.postId, content);
     location.reload();
   };
 
@@ -46,7 +46,7 @@ class CommentList {
   };
 
   render() {
-    const { target, comments } = this.state;
+    const { target, comments } = this.props;
     const count = comments?.length || 0;
 
     /*html*/
@@ -62,7 +62,7 @@ class CommentList {
             ? comments
                 .map((comment) => {
                   /*html*/
-                  return `<li>${comment.content} <button class="delete-comment-btn" data-commentid="${comment.commentId}">🗑</button></li>`;
+                  return `<li class="comment">${comment.content} <button class="delete delete-comment-btn" data-commentid="${comment.commentId}">X</button></li>`;
                 })
                 .join("")
             : ""

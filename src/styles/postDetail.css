@@ -1,6 +1,25 @@
+#post-detail {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border: 1px solid #c7c7c7;
+  padding: 10px;
+  border-radius: 5px;
+  gap: 10px;
+  width: 100%;
+}
+
+.post-detail {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
 .post-detail > img {
-  width: 200px;
-  height: 200px;
+  width: 100%;
+  height: 400px;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
 }
 
 .post-detail input[name="title"]:read-only,
@@ -8,4 +27,34 @@
   border: none;
   resize: none;
   background-color: transparent;
+}
+
+.detail-top {
+  display: flex;
+  justify-content: space-between;
+}
+
+.detail-top a,
+button {
+  height: 40px;
+  font-size: 15px;
+  padding: 10px;
+}
+
+.btn-group {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.post-detail input[name="title"] {
+  margin-top: 5px;
+  width: 100%;
+  height: 30px;
+}
+
+.post-detail textarea {
+  margin: 5px 0;
+  width: 100%;
+  max-height: 100px;
 }

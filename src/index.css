@@ -1,6 +1,40 @@
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&family=Silkscreen&display=swap");
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "Noto Sans KR", sans-serif;
+}
+
+#bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  background-color: #ffffff;
+  opacity: 0.1;
+  background-size: 30px 30px;
+  background-image: repeating-linear-gradient(
+    0deg,
+    #ad224f,
+    #ad224f 1.5px,
+    #ffffff 1.5px,
+    #ffffff
+  );
+}
+
 #root {
   max-width: 640px;
-  margin: 0 auto;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: white;
+  border-radius: 20px;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
 }
 
 .hide {
@@ -9,4 +43,55 @@
 
 .show {
   display: block;
+}
+
+article {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+}
+
+.link-button {
+  font-size: large;
+  font-weight: 500;
+  text-decoration: none;
+  padding: 10px 15px;
+  border-radius: 10px;
+  border: 1px solid #ececec;
+  color: black;
+}
+
+.default-hover:hover {
+  box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px,
+    rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+}
+
+button {
+  padding: 10px;
+  background-color: #3498da;
+  color: white;
+  font-weight: 700;
+  font-size: 15px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+button:hover {
+  filter: brightness(90%);
+}
+
+button.delete {
+  background-color: #da3f34;
+}
+
+button.cancel {
+  background-color: #414141;
+}
+
+button.edit {
+  background-color: #21b555;
 }

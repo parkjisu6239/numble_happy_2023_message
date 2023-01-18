@@ -13,10 +13,10 @@ interface Props {
 }
 
 class PostDetail {
-  state: Props;
+  props: Props;
 
   constructor(props: Props) {
-    this.state = props;
+    this.props = props;
     this.render();
     this.addEventListener();
   }
@@ -30,13 +30,13 @@ class PostDetail {
       image: data.get("image"),
     } as PostParams;
 
-    const res = await updatePost(this.state.post.postId, params);
-    this.state.setEditMode(false);
-    this.state.setPost(res.data.post);
+    const res = await updatePost(this.props.post.postId, params);
+    this.props.setEditMode(false);
+    this.props.setPost(res.data.post);
   };
 
   _deletePost = async () => {
-    const res = await deletePost(this.state.post.postId);
+    const res = await deletePost(this.props.post.postId);
 
     if (res.code >= 400) {
       window.alert(`오류가 발생했습니다.(${res.code})`);
@@ -49,11 +49,11 @@ class PostDetail {
 
   addEventListener = () => {
     const editBtn = document.querySelector(".edit-btn");
-    editBtn.addEventListener("click", () => this.state.setEditMode(true));
+    editBtn.addEventListener("click", () => this.props.setEditMode(true));
 
     const cancelEditBtn = document.querySelector(".cancel-edit-btn");
     cancelEditBtn.addEventListener("click", () =>
-      this.state.setEditMode(false)
+      this.props.setEditMode(false)
     );
 
     const form = document.querySelector(".post-detail");
@@ -64,10 +64,20 @@ class PostDetail {
   };
 
   render() {
-    const { target, post, editMode } = this.state;
+    const { target, post, editMode } = this.props;
+
     /*html*/
     target.innerHTML = `
-    <button class="delete-post">삭제</button>
+    <div class="detail-top">
+      <a href="/" class="link-button">메인으로</a>
+      <div class="btn-group">
+        <button type="button" class="edit edit-btn ${
+          editMode ? "hide" : "show"
+        }"
+        >수정</button>
+        <button class="delete delete-post">삭제</button>
+      </div>
+    </div>
     <form class="post-detail">
         <img src="${post.image}" alt="img"/>
         <input
@@ -89,11 +99,9 @@ class PostDetail {
         }>${post.content}</textarea>
       </div>
       <button type="submit" class="${!editMode ? "hide" : "show"}">완료</button>
-      <button type="submit" action="/" class="cancel-edit-btn ${
+      <button type="submit" action="/" class="cancel cancel-edit-btn ${
         !editMode ? "hide" : "show"
       }">취소</button>
-      <button type="button" class="edit-btn ${editMode ? "hide" : "show"}"
-      >수정</button>
   </fieldset>
   </form>
     `;
