@@ -1,8 +1,8 @@
 import type { RouteInfo, EventWithRouteInfo } from "src/types";
-import MainPage from "pages/MainPage";
-import NewPage from "pages/NewPage";
-import PostPage from "pages/PostPage";
-import NotFoundPage from "pages/NotFoundPage";
+import MainPage from "@/pages/MainPage";
+import NewPage from "@/pages/NewPage";
+import PostPage from "@/pages/PostPage";
+import NotFoundPage from "@/pages/NotFoundPage";
 
 const routes = [
   { path: /^\/$/, view: MainPage },

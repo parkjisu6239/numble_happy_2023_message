@@ -1,5 +1,5 @@
 .new-image {
-  background-image: url(../asset/new.png);
+  background-image: url(@/asset/new.png);
   background-repeat: no-repeat;
   background-position: center;
   border: 1px solid #ececec;

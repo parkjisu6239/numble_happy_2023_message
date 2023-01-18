@@ -1,8 +1,8 @@
-import { type Post as PostType } from "../types";
-import { updatePost, deletePost, type PostParams } from "utils/apis";
-import { navigate } from "../router";
+import { type Post as PostType } from "@/types";
+import { updatePost, deletePost, type PostParams } from "@/utils/apis";
+import { navigate } from "@/router";
 
-import "../styles/postDetail.css";
+import "@/styles/postDetail.css";
 
 interface Props {
   target: HTMLDivElement;

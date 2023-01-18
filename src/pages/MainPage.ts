@@ -1,8 +1,8 @@
-import { type Post as PostType } from "../types";
-import useState from "../hooks/useState";
-import { getAllPost } from "utils/apis";
-import Post from "components/Post";
-import "../styles/postList.css";
+import { type Post as PostType } from "@/types";
+import useState from "@/hooks/useState";
+import { getAllPost } from "@/utils/apis";
+import Post from "@/components/Post";
+import "@/styles/postList.css";
 
 interface Props {
   target: HTMLDivElement;

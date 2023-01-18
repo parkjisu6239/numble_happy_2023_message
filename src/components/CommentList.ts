@@ -1,7 +1,7 @@
-import { Comment } from "../types";
-import { createComment, deleteComment, type PostParams } from "utils/apis";
+import { Comment } from "@/types";
+import { createComment, deleteComment, type PostParams } from "@/utils/apis";
 
-import "../styles/postDetail.css";
+import "@/styles/postDetail.css";
 
 interface Props {
   target: HTMLDivElement;

@@ -1,4 +1,4 @@
-import { type Post as PostType } from "../types";
+import { type Post as PostType } from "@/types";
 
 class Post {
   post: PostType;

@@ -1,4 +1,4 @@
-import { Post, PostWithComment, Comment } from "../types";
+import { Post, PostWithComment, Comment } from "@/types";
 
 const UNSPLASH_BASE_URL = "https://api.unsplash.com";
 const NUMBLE_BASE_URL = "http://43.201.103.199";

@@ -1,6 +1,6 @@
-import NewPage from "pages/NewPage";
-import MainPage from "pages/MainPage";
-import { Router, navigate } from "./router";
+import NewPage from "@/pages/NewPage";
+import MainPage from "@/pages/MainPage";
+import { Router, navigate } from "@/router";
 
 interface Props {
   target: HTMLDivElement;

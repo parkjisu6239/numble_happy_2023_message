@@ -1,7 +1,7 @@
-import { getRandomImage, createPost, type PostParams } from "utils/apis";
-import { navigate } from "../router";
+import { getRandomImage, createPost, type PostParams } from "@/utils/apis";
+import { navigate } from "@/router";
 
-import "../styles/new.css";
+import "@/styles/new.css";
 
 interface Props {
   target: HTMLDivElement;

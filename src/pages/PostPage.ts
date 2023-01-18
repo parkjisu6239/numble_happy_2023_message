@@ -1,12 +1,12 @@
-import { type Post, Comment } from "../types";
-import useState from "../hooks/useState";
-import { getPostDetail } from "utils/apis";
-import { getParams } from "utils/misc";
-import PostDetail from "components/PostDetail";
-import CommentList from "components/CommentList";
-import { navigate } from "../router";
+import { type Post, Comment } from "@/types";
+import useState from "@/hooks/useState";
+import { getPostDetail } from "@/utils/apis";
+import { getParams } from "@/utils/misc";
+import PostDetail from "@/components/PostDetail";
+import CommentList from "@/components/CommentList";
+import { navigate } from "@/router";
 
-import "../styles/postList.css";
+import "@/styles/postList.css";
 
 interface Props {
   target: HTMLDivElement;
