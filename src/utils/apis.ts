@@ -47,7 +47,9 @@ export const getAllPost = async () => {
   return await request<{
     code: number;
     data: { posts: Post[] };
-  }>(NUMBLE_BASE_URL + "/posts");
+  }>(NUMBLE_BASE_URL + "/posts", {
+    mode: "no-cors",
+  });
 };
 
 /**
